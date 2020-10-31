@@ -18,7 +18,7 @@
       version-control t ; use version on backups
       delete-old-versions t ; automatically delete old backups
       kept-new-versions 20 ; how many times to keep it
-      kept-old-versions 5 ; '
+      kept-old-versions 5
       )
 
 (global-linum-mode) ; line

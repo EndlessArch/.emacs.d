@@ -1,1 +1,1 @@
-("~/Documents/Kkutu-Macro/" "~/Documents/Term3D/")
+("~/" "~/Documents/Term3D/" "~/Documents/tmclib/" "~/Documents/Kkutu-Macro/")

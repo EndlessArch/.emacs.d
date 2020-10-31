@@ -26,7 +26,10 @@
   :ensure t
   :pin melpa
   :init
-  (setq quelpa-update-melpa-p nil)
+  (setq quelpa-update-melpa-p nil
+        )
+  :config
+  (quelpa-use-package-activate-advice)
   )
 
 ;;
@@ -40,38 +43,62 @@
 (setq with-editor-emacsclient-executable ; IDK
       "/Applications/Emacs.app/Contents/MacOS/Emacs")
 
-(setq u/:banned-module-list '(
-			      ; banned modules name.
-			      'buf
-			      )
-      )
+;;
 
-(dolist (u/:activated-module-list '(
-				    (basic-defs . "u-defs.el") ; basic definitions
-				    (emacs-sets . "u-settings.el") ; settings
-				    (emacs-kb . "u-keybindings.el") ; keybindings
-				    (custom-splash-screen . "user/u-splash-screen.el")
-				    
-				    (dev . "u-dev.el")
-				    (dev/git . "u-dev-git.el")
-				    (misc . "u-misc.el")
-				    (buf . "user/u-buffer.el")
-				     
-				    (c-c++ . "u-c-c++.el")
-				    (theme . "u-theme.el")
-				    ) ;
-				  )
-  (unless (member (car u/:activated-module-list)
-		  u/:banned-module-list)
-    (message "Loading %s module..." (car u/:activated-module-list))
+(setq u/:init/:module/:activated-module-list
+      	 '(
+       	   (var . "var/aa.el")
+	   (init . "init/aa.el")
+
+	   (misc . "misc/aa.el")
+
+	   (root . "aa.el")
+           (lang . "lang/aa.el")
+
+	   (visual . "visual/aa.el")
+
+           (input . "input/aa.el")
+	   )
+	 )
+
+; for instant debugging
+(setq u/:init/:module/:banned-sub-module-list
+      '(
+	; banned modules name.
+	))
+
+(defun u/:init/:module/:aa (mod-name sub-mod-list)
+  (dolist (u/:var/:local/:mod sub-mod-list)
+    (unless (member
+	     (car u/:var/:local/:mod)
+	     u/:init/:module/:banned-sub-module-list)
+      (load-file (expand-file-name
+		  (concat "~/.emacs.d/user/"
+			  ; concat unless it's empty
+			  (unless (eq 0 (length mod-name))
+			    (concat
+			     mod-name
+			     "/"))
+			  (cdr u/:var/:local/:mod))
+		  )) ; lf
+      ) ; dl
+    )
+  )
+
+(dolist (current-module u/:init/:module/:activated-module-list)
+  (progn
+    (message "Loading %s module..." (car current-module))
+
     (load-file (expand-file-name
-		(concat ".emacs.d/" (cdr u/:activated-module-list) )
+		(concat ".emacs.d/user/" (cdr current-module))
 		)
 	       ) ; load each files.
-    ) ; unless
+
+    ) ; progn
   ) ; dolist
 
  ; End ///
+(message "%s.." (emacs-uptime))
 
 ;; (setq my-package-list '(
 ;; 			use-package
@@ -333,9 +360,9 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("3346f0098a27c74b3e101a7c6b5e57a55cd073a8837b5932bff3d00faa9b76d0" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" default))
+   '("d0aa1464d7e55d18ca1e0381627fac40229b9a24bca2a3c1db8446482ce8185e" "3346f0098a27c74b3e101a7c6b5e57a55cd073a8837b5932bff3d00faa9b76d0" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" default))
  '(package-selected-packages
-   '(treemacs mode-line-stats-mode mode-line-stats minimap minimap-mode nyan-mode company-quickhelp-mode company-box company-quickhelp magit company company-mode use-package tron-legacy-theme elcord cmake-ide)))
+   '(disable-mouse company-cmake treemacs mode-line-stats-mode mode-line-stats minimap minimap-mode nyan-mode company-quickhelp-mode company-box company-quickhelp magit company company-mode use-package tron-legacy-theme elcord cmake-ide)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

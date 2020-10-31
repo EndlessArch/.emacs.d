@@ -12,9 +12,17 @@
   :config
   ) ; 'jetbrains-darcula
 
-;; (load-theme 'jetbrains-darcula t)
+(use-package gruber-darker-theme
+  :ensure t
+  :init
+  :config
+  )
 
-(load-theme 'solarized-light t)
+;; (load-theme 'solarized-light t)
 ;; (load-theme 'solarized-dark t)
 
-;; (load-theme 'leuven) ; favourite
+;; (load-theme 'jetbrains-darcula t)
+
+(load-theme 'gruber-darker t)
+
+;; (load-theme 'leuven)

@@ -27,12 +27,19 @@
 ;;   ;; (global-yascroll-bar-mode 1)
 ;;   )
 
-(use-package elcord
-  :ensure t
+(use-package elcord-mode
+  :ensure quelpa
+  :quelpa (elcord :fetcher git :url "https://github.com/EndlessArch/elcord.git") ;:repo "EndlessArch/elcord")
+;; (use-package elcord
+;;   :ensure t
   :init
   :config
-  (setq elcord--editor-name "Emacs v28")
-  (add-hook 'prog-mode-hook 'elcord-mode)
+  (setq elcord--editor-name (concat
+			     "GCC Emacs "
+			     (format "v%d.%d" emacs-major-version emacs-minor-version)
+			     )
+	)
+  (add-hook 'after-init-hook 'elcord-mode)
   )
 
 (use-package which-key

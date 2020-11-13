@@ -74,12 +74,19 @@
   ;; :hook (after-init-hook . cmake-ide-mode)
   :config
   (setq ;; cmake-ide-rdm-executable
-   cide--rc-args ""
-   cide--rdm-args (concat
-                   " --enable-compiler-manager"
-                   (concat " --isystem " u/:c-c++/:system-include-path)
+   ;; cide--rc-args ""
+   ;; cide--rdm-args (concat
+   ;;                 " --enable-compiler-manager"
+   ;;                 (concat " --isystem " u/:c-c++/:system-include-path)
                    
-                   )
+   ;;                 )
+
+;;   cide--rdm-args "-v" ; gg
+   ;; cide--rdm-args (concat "-v -L " (expand-file-name "~/rl.log"))
+   cide--rdm-args '(
+                    "-v"
+                    "-L" (expand-file-name "~/rl.log")
+                    )
 
    cide--rdm-executable u/:c-c++/:rdm-executable
 

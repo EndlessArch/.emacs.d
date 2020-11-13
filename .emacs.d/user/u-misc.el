@@ -27,7 +27,7 @@
 ;;   ;; (global-yascroll-bar-mode 1)
 ;;   )
 
-(use-package elcord-mode
+(use-package elcord
   :ensure quelpa
   :quelpa (elcord :fetcher git :url "https://github.com/EndlessArch/elcord.git") ;:repo "EndlessArch/elcord")
 ;; (use-package elcord

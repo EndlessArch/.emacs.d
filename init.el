@@ -12,8 +12,13 @@
 
 (package-initialize)
 
-(unless package-archive-contents
-  (package-refresh-contents))
+(if (not (package-installed-p 'use-package))
+    (progn
+      (package-refresh-contents)
+      (package-install 'use-package))
+  (unless package-archive-contents
+    (package-refresh-contents))
+  )
 
 (unless (package-installed-p 'quelpa) ; check 'quelpa
   (with-temp-buffer
@@ -21,6 +26,8 @@
     (eval-buffer)
     (quelpa-self-upgrade))
   )
+
+(require 'use-package)
 
 (use-package quelpa-use-package
   :ensure t
@@ -43,8 +50,44 @@
 (setq with-editor-emacsclient-executable ; IDK
       "/Applications/Emacs.app/Contents/MacOS/Emacs")
 
-;;
+;;;; Settings
 
+; NANO
+(if nil ; t
+    (progn
+        (add-to-list 'load-path "~/.emacs.d/nano")
+
+        ; nano layout
+        (require 'nano-layout)
+
+        ; dark theme
+        (require 'nano-theme-dark)
+        ;; (require 'nano-theme-light)
+
+        ; refer nano.el
+        (progn
+          (require 'nano-faces)
+          (nano-faces)
+
+          (require 'nano-theme)
+          (nano-theme)
+
+          (require 'nano-session)
+  
+          (require 'nano-modeline)
+          (nano-modeline)
+
+          ;nano-bindings
+
+          (require 'nano-splash)
+
+          (require 'nano-help)
+	  )
+	)
+  (message "Nano disabled")
+  )
+
+; custom modules
 (setq u/:init/:module/:activated-module-list
       	 '(
        	   (var . "var/aa.el")
@@ -362,7 +405,7 @@
  '(custom-safe-themes
    '("d0aa1464d7e55d18ca1e0381627fac40229b9a24bca2a3c1db8446482ce8185e" "3346f0098a27c74b3e101a7c6b5e57a55cd073a8837b5932bff3d00faa9b76d0" "c433c87bd4b64b8ba9890e8ed64597ea0f8eb0396f4c9a9e01bd20a04d15d358" "13a8eaddb003fd0d561096e11e1a91b029d3c9d64554f8e897b2513dbf14b277" "2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "7f1d414afda803f3244c6fb4c2c64bea44dac040ed3731ec9d75275b9e831fe5" "51ec7bfa54adf5fff5d466248ea6431097f5a18224788d0bd7eb1257a4f7b773" "830877f4aab227556548dc0a28bf395d0abe0e3a0ab95455731c9ea5ab5fe4e1" "0fffa9669425ff140ff2ae8568c7719705ef33b7a927a0ba7c5e2ffcfac09b75" default))
  '(package-selected-packages
-   '(disable-mouse company-cmake treemacs mode-line-stats-mode mode-line-stats minimap minimap-mode nyan-mode company-quickhelp-mode company-box company-quickhelp magit company company-mode use-package tron-legacy-theme elcord cmake-ide)))
+   '(eglot all-the-icons lsp-mode disable-mouse company-cmake treemacs mode-line-stats-mode mode-line-stats minimap minimap-mode nyan-mode company-quickhelp-mode company-box company-quickhelp magit company company-mode use-package tron-legacy-theme elcord cmake-ide)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

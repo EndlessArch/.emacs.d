@@ -5,14 +5,14 @@
   (splash-screen/:splash-internal t)
   )
 
-(defun splash-screen/:debug-load-file ()
-  (interactive)
-  (load-file "~/.emacs.d/user/init/u-splash-screen.el")
-  ;; (if (
-  ;;      )
-  ;;     (kill-buffer buf)
-  ;;   )
-  )
+;; (defun splash-screen/:debug-load-file ()
+;;   (interactive)
+;;   (load-file "~/.emacs.d/user/init/u-splash-screen.el")
+;;   ;; (if (
+;;   ;;      )
+;;   ;;     (kill-buffer buf)
+;;   ;;   )
+;;   )
 
 (defun splash-screen/:splash-internal (force-flag)
   (interactive)
@@ -88,7 +88,7 @@
 
 	  (insert-text-button " [Endless Arch] "
 			      'action (lambda (_) (browse-url "https://github.com/EndlessArch"))
-			      'help-echo "Visit to your github profile"
+			      'help-echo "To my own github profile"
 			      'follow-link t)
 	  (center-line) (insert-char ?\n 3)
 
@@ -159,6 +159,11 @@
   (if (get-buffer "*splash*")
         (kill-buffer "*splash*")))
 
+(defun splash-screen-kill--about-gnu-emacs ()
+  "Kill \"*About GNU Emacs*\" buffer"
+  (if (get-buffer "*About GNU Emacs*")
+      (kill-buffer "*About GNU Emacs*")))
+
 ;; Suppress any startup message in the echo area
 (run-with-idle-timer 0.05 nil (lambda() (message nil)))
 
@@ -171,9 +176,8 @@
          (not inhibit-startup-screen)
          )
     (progn
-      (add-hook 'window-setup-hook (lambda ()
-                                     (splash-screen/:splash-internal nil)
-                                     ))
+      (add-hook 'window-setup-hook 'splash-screen)
+      (add-hook 'window-setup-hook 'splash-screen-kill--about-gnu-emacs)
                                        
       (setq inhibit-startup-screen t 
             inhibit-startup-message t
@@ -182,3 +186,4 @@
 (provide 'splash-screen)
 ;;; splash-screen.el ends here
 
+;; (add-hook 'prog-mode-hook 'splash-screen) ; 'splash-screen/:splash)

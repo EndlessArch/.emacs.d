@@ -4,6 +4,7 @@
       '(
         (/misc/buffers . "u-buffers.el")
         (/misc/discord-rpc . "u-discord-rpc.el")
+        (/misc/spotify . "u-spotify.el")
 	)
       )
 

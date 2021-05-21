@@ -5,5 +5,9 @@
   :init
   ;
   :config
+  (setq
+   disable-mouse-mode-lighter " :maus"
+   disable-mouse-mode-global-lighter " maus"
+   )
   (add-hook 'after-init-hook 'global-disable-mouse-mode)
   )

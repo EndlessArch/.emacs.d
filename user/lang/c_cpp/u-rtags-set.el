@@ -6,7 +6,7 @@
   :init
   :config
   (setq rtags-completions-enabled t
-	rtags-autostart-diagnostics nil ;t
+	rtags-autostart-diagnostics t ; nil
 
         rtags-rc-log-enabled t
 
@@ -68,36 +68,30 @@
 (use-package cmake-ide
   :ensure quelpa
   :quelpa (cmake-ide :fetcher github :repo "EndlessArch/cmake-ide")
-;; (use-package cmake-ide
-;;   :ensure t
   :init
   ;; :hook (after-init-hook . cmake-ide-mode)
   :config
-  (setq ;; cmake-ide-rdm-executable
-   ;; cide--rc-args ""
-   ;; cide--rdm-args (concat
-   ;;                 " --enable-compiler-manager"
-   ;;                 (concat " --isystem " u/:c-c++/:system-include-path)
-                   
-   ;;                 )
+  (setq
+   cmake-ide-cmake-command u/:c-c++/:cmake-executable
+   cmake-ide-rc-executable u/:c-c++/:rc-executable
+   ; cmake--rdm-executable u/:c-c++/:rdm-executable
+   cmake-ide-rdm-executable u/:c-c++/:rdm-executable
+
+   cmake-ide-rdm-rc-path nil ; u/:c-c++/:rdm-rc-config-path
 
 ;;   cide--rdm-args "-v" ; gg
-   ;; cide--rdm-args (concat "-v -L " (expand-file-name "~/rl.log"))
-   cide--rdm-args '(
+   cide--rdm-args `(
                     "-v"
-                    "-L" (expand-file-name "~/rl.log")
+;;                    "-L" ,(expand-file-name "~/rl.log")
                     )
 
-   cide--rdm-executable u/:c-c++/:rdm-executable
-
-   cmake-ide-rdm-rc-path u/:c-c++/:rdm-rc-config-path ;; u/:c-c++/:rtags-path
-   cmake-ide-cmake-command u/:c-c++/:cmake-executable
-   ;; cmake-ide-rc-executable "/usr/local/Cellar/rtags/2.38/bin/rc"
-
+   ;;; Let know system include path
    ;; cmake-ide-flags-c++ (concat "-I" u/:c-c++/:system-include-path)
    cmake-ide-flags-c++ (list (concat "-isystem " ;"-I"
                                      u/:c-c++/:system-include-path))
    )
+
+  ; (setq 
 
   (cmake-ide-setup)
   )

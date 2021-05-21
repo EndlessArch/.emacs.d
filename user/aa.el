@@ -5,7 +5,7 @@
 	(/dev . "u-dev.el")
 	(/dev-git . "u-dev-git.el")
 
-        (/misc . "u-misc.el")
+        ;; (/misc . "u-misc.el")
 
 	;; (/c-c++ . "u-c-c++.el")
 	)

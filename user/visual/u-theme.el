@@ -29,8 +29,14 @@
    ;; tron-legacy-theme-softer-bg
    )
 
-  (load-theme 'tron-legacy t)
+  ;; (load-theme 'tron-legacy t)
 
   )
 
-;; (load-theme 'gruber-darker t)
+(use-package rebecca-theme
+  :ensure t
+  :init
+  :config
+
+  (load-theme 'rebecca t)
+  )

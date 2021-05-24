@@ -4,6 +4,7 @@
       '(
 	(/lang/c-c++ . "c_cpp/u-c-c++.el")
         ;; (/lang/rtags . "c_cpp/u-rtags-set.el")
+	(/lang/cmake . "cmake/u-cmake.el")
 	)
       )
 

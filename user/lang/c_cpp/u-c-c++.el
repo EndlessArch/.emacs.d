@@ -1,12 +1,13 @@
 ;; user/lang/c_cpp/u-c-c++.el
 ;; C C++
 
-;; (use-package modern-cpp-font-lock
-;;   :ensure t
-;;   :init
-;;   (add-hook 'after-init-hook 'modern-c++-font-lock-global-mode)
-;;   :config
-;;   )
+(use-package modern-cpp-font-lock
+  :ensure t
+  :hook ((c-mode c++-mode) . modern-c++-font-lock-global-mode)
+  :init
+  ;; (add-hook 'after-init-hook 'modern-c++-font-lock-global-mode)
+  :config
+  )
 
 (use-package clang-format
   :ensure t

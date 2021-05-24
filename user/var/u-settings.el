@@ -55,6 +55,8 @@
 
 ;;; FOR SOMETHING SIGNIFICANT AND RELEVANT TO PERFORMANCE!
 
+(setq auto-window-vscroll nil)
+
 ; 1MB
 (setq read-process-output-max (* 3 (* 1024 1024)))
 

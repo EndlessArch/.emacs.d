@@ -8,12 +8,15 @@
 
 (use-package nyan-mode
   :ensure t
+  :hook ((window-setup . nyan-mode)
+         (nyan-mode . nyan-start-animation)
+         (nyan-mode . nyan-stop-music))
   :init
   :config
   ;; (nyan-start-animation)
   ;; (nyan-stop-music)
-  (add-hook ;; 'prog-mode-hook
-   'window-setup-hook 'nyan-mode)
+  ;; (add-hook ;; 'prog-mode-hook
+  ;;  'window-setup-hook 'nyan-mode)
   )
 
 (use-package vterm
@@ -75,4 +78,11 @@
    nlinum-relative-current-symbol  ">"
    nlinum-relative-offset          0
    )
+  )
+
+(use-package emojify
+  :ensure t
+  :hook (after-init . global-emojify-mode)
+  :init
+  :config
   )

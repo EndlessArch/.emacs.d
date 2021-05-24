@@ -15,6 +15,61 @@
 
 ; packages
 
+;;; ref: https://github.com/ubolonton/emacs-tree-sitter/issues/41
+(use-package tree-sitter
+  :ensure t
+  :if (executable-find "tree-sitter")
+  :hook (
+         (after-init . global-tree-sitter-mode)
+         (tree-sitter-after-on . tree-sitter-hl-mode)
+
+         ((c-mode
+           c++-mode
+           rust-mode
+           java-mode
+           python-mode)
+          . tree-sitter-mode))
+  :init
+  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/core"))
+  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/lisp"))
+  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/langs"))
+
+  (add-to-list 'exec-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/bin"))
+  (add-to-list 'exec-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/langs/bin"))
+
+  ;; (add-to-list 'tree-sitter-load-path
+  (setq tree-sitter-load-path
+        (list
+         (expand-file-name "~/.emacs.d/elpa/tree-sitter-langs-20210314.1704/bin")))
+  :config
+  (tree-sitter-require 'c)
+  (tree-sitter-require 'cpp)
+  (tree-sitter-require 'rust)
+  (tree-sitter-require 'java)
+  (tree-sitter-require 'python)
+  ; no emacs-lisp-mode
+  )
+
+;; (use-package tree-sitter-indent
+;;   :disabled t ; DISABLED
+;;   :ensure t
+;;   :after tree-sitter
+;;   :hook (tree-sitter-after-on . tree-sitter-indent-mode)
+;;   :init
+;;   :config
+;;   )
+
+(use-package tree-sitter-langs
+  :ensure t
+  :if (executable-find "tree-sitter")
+  :demand t
+  :after tree-sitter
+  :hook (after-init . (lambda ()
+                        (tree-sitter-langs-install-grammers t)))
+  :init
+  :config
+  )
+
 (use-package projectile
   :ensure t
   :init
@@ -134,11 +189,29 @@
   (setq eglot-server-programs
         (delete `((c++-mode c-mode) "ccls") eglot-server-programs))
 
+  ;; ; delete pyls
+  ;; (setq eglot-server-programs
+  ;;       (delete `(python-mode "pyls") eglot-server-programs))
+
   ; add clangd
   (add-to-list 'eglot-server-programs
                (append `((c++-mode c-mode) ,u/:c-c++/:clangd-executable) u/:c-c++/:clangd-args))
+
+  ; add cmakels
+  (add-to-list 'eglot-server-programs
+               (append `(cmake-mode "cmakels")))
+
+  ; add pyright
+  (add-to-list 'eglot-server-programs
+               (append `(python-mode "pyright")))
   
-  :hook ((c++-mode . eglot-ensure))
+  :hook ((
+          c-mode
+          c++-mode
+          rust-mode
+          java-mode
+          python-mode)
+         . eglot-ensure)
   )
 
 (use-package lsp-mode

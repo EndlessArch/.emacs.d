@@ -26,12 +26,13 @@
   ;
   )
 
-;; (use-package treemacs
-;;   :ensure t
-;;   :init
-;;   :config
-;;   ;
-;;   )
+(use-package treemacs
+  :disabled t
+  :straight (treemacs :type git :host github :repo "EndlessArch/treemacs")
+  :init
+  :config
+  ;
+  )
 
 (use-package which-key
   :ensure t

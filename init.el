@@ -9,7 +9,7 @@
 ;	("marmalade" . "http://marmalade-repo.org/packages/") ; Certificate expired, failed to validate.
 	("org" . "http://orgmode.org/elpa/")
 	("gnu" . "http://elpa.gnu.org/packages/")
-	("sc" . "http://joseito.republika.pl/sunrise-commander/")
+	;; ("sc" . "http://joseito.republika.pl/sunrise-commander/")
 	))
 
 (package-initialize)
@@ -58,6 +58,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
+(setq use-package-always-ensure t)
 
 ;;
 

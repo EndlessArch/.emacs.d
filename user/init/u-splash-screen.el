@@ -69,8 +69,8 @@
           (center-line) (insert-char ?\n 2)
           (insert (propertize "My own editor" 'face 'shadow))
 	  (center-line) (insert-char ?\n padding-bottom1)
-	  (message "Padding = %d" padding-bottom1)
-	  (insert (propertize "Type anything to continue" 'face 'shadow))
+	  ;; (message "Padding = %d" padding-bottom1)
+	  (insert (propertize "Type SPC/RET to continue" 'face 'shadow))
           (center-line)
 
           ;; Vertical padding to bottom
@@ -97,22 +97,22 @@
                    "GNU Emacs comes with ABSOLUTELY NO WARRANTY" 'face 'shadow))
           (center-line) (insert "\n")
           (insert (propertize
-                   "Copyright (C) 2020 Free Software Foundation, Inc." 'face 'shadow))
+                   "Copyright (C) 2021 Free Software Foundation, Inc." 'face 'shadow))
           (center-line) (insert "\n")
 
           (goto-char 0)
           (read-only-mode t)
 
           (if (not force-flag)
-              (local-set-key [t]               'splash-screen-fade-to-about)
-              (local-set-key (kbd "C-[")       'splash-screen-fade-to-default)
-              (local-set-key (kbd "<escape>")  'splash-screen-fade-to-default)
-              (local-set-key (kbd "q")         'splash-screen-fade-to-default)
-              (local-set-key " "               'splash-screen-fade-to-default)
-              (local-set-key "x"               'splash-screen-fade-to-default)
-              (local-set-key (kbd "<RET>")     'splash-screen-fade-to-default)
-              (local-set-key (kbd "<return>")  'splash-screen-fade-to-default)
-	      )
+              ;; this restrains M-x
+              ;; (local-set-key [t]             'splash-screen-fade-to-about)
+            (local-set-key (kbd "C-[")       'splash-screen-fade-to-default)
+
+            (local-set-key (kbd "<escape>")  'splash-screen-fade-to-default)
+            (local-set-key (kbd "<SPC>")     'splash-screen-fade-to-default)
+            ;; (local-set-key "x"               'splash-screen-fade-to-default)
+            (local-set-key (kbd "<RET>")     'splash-screen-fade-to-default)
+	    )
           (local-set-key (kbd "<mouse-1>") 'mouse-set-point)
           (local-set-key (kbd "<mouse-2>") 'operate-this-button)
 

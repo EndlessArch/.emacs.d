@@ -30,12 +30,14 @@
            python-mode)
           . tree-sitter-mode))
   :init
-  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/core"))
-  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/lisp"))
-  (add-to-list 'load-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/langs"))
+  (let ((path (directory-file-name (executable-find "tree-sitter"))))
+    (add-to-list 'load-path (expand-file-name (concat path "/core")))
+    (add-to-list 'load-path (expand-file-name (concat path "/lisp")))
+    (add-to-list 'load-path (expand-file-name (concat path"/langs")))
 
-  (add-to-list 'exec-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/bin"))
-  (add-to-list 'exec-path (expand-file-name "~/Documents/DL/emacs-tree-sitter/langs/bin"))
+    (add-to-list 'exec-path (expand-file-name (concat path"/bin")))
+    (add-to-list 'exec-path (expand-file-name (concat path "~/langs/bin")))
+    )
 
   ;; (add-to-list 'tree-sitter-load-path
   (setq tree-sitter-load-path
@@ -301,6 +303,16 @@
   (add-to-list 'lsp-file-watch-ignored ".DS_Store")
 
   :commands lsp-ui-mode
+  )
+
+(use-package lsp-treemacs
+  :disabled t
+  :hook (
+         (lsp-mode . lsp-treemacs-sync-mode)
+         (lsp-mode . lsp-treemacs-errors-list)
+         )
+  :init
+  :config
   )
 
 ;; indeed, company-capf

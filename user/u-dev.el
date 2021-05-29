@@ -180,49 +180,54 @@
   (add-hook 'company-mode-hook 'u/:company/:company-box-init-func)
   )
 
-(use-package eglot
-  :ensure t
-  :init
-  :config
+;; (use-package eglot
+;;   :disabled t
+;;   :ensure t
+;;   :init
+;;   :config
 
-  ; delete ccls
-  (setq eglot-server-programs
-        (delete `((c++-mode c-mode) "ccls") eglot-server-programs))
+;;   ; delete ccls
+;;   (setq eglot-server-programs
+;;         (delete `((c++-mode c-mode) "ccls") eglot-server-programs))
 
-  ;; ; delete pyls
-  ;; (setq eglot-server-programs
-  ;;       (delete `(python-mode "pyls") eglot-server-programs))
+;;   ;; ; delete pyls
+;;   ;; (setq eglot-server-programs
+;;   ;;       (delete `(python-mode "pyls") eglot-server-programs))
 
-  ; add clangd
-  (add-to-list 'eglot-server-programs
-               (append `((c++-mode c-mode) ,u/:c-c++/:clangd-executable) u/:c-c++/:clangd-args))
+;;   ; add clangd
+;;   (add-to-list 'eglot-server-programs
+;;                (append `((c++-mode c-mode) ,u/:c-c++/:clangd-executable) u/:c-c++/:clangd-args))
 
-  ; add cmakels
-  (add-to-list 'eglot-server-programs
-               (append `(cmake-mode "cmakels")))
+;;   ; add cmakels
+;;   (add-to-list 'eglot-server-programs
+;;                (append `(cmake-mode "cmakels")))
 
-  ; add pyright
-  (add-to-list 'eglot-server-programs
-               (append `(python-mode "pyright")))
+;;   ; add pyright
+;;   (add-to-list 'eglot-server-programs
+;;                (append `(python-mode "pyls")))
   
-  :hook ((
-          c-mode
-          c++-mode
-          rust-mode
-          java-mode
-          python-mode)
-         . eglot-ensure)
-  )
+;;   :hook ((
+;;           c-mode
+;;           c++-mode
+;;           rust-mode
+;;           java-mode
+;;           python-mode)
+;;          . eglot-ensure)
+;;   )
 
 (use-package lsp-mode
-  :disabled t ; DISABLED
-  :ensure t
+  ;; :disabled t ; DISABLED
+  :straight (lsp-mode :type git :host github :repo "EndlessArch/lsp-mode")
+  ;; :ensure t
   :hook (
 	 (c-mode . lsp)
 	 (c++-mode . lsp)
 	 (cmake-mode . lsp)
+         (rust-mode . lsp)
+         (java-mode . lsp)
+         (python-mode . lsp)
 
-         (after-init . lsp)
+         ;; (after-init . lsp)
 	 )
   ;; :init
   ;; (add-hook 'after-init-hook 'lsp-mode)
@@ -235,69 +240,68 @@
   
   :commands lsp)
 
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :hook (
-;;          (after-init . lsp-ui-mode)
-;;          )
-;;   ;; (add-hook 'after-init-hook 'lsp-ui-mode)
-;;   :config
+(use-package lsp-ui
+  :ensure t
+  :hook (
+         (lsp-mode . lsp-ui-mode)
+         )
+  :config
   
-;;   (setq
-;;    lsp-ui-sideline-enable t
+  (setq
+   lsp-ui-sideline-enable t
 
-;;    ; show diagnostics at sideline
-;;    lsp-ui-sideline-show-diagnostics t
+   ; show diagnostics at sideline
+   lsp-ui-sideline-show-diagnostics t
 
-;;    lsp-ui-sideline-code-actions-prefix ""
-;;    lsp-ui-sideline-ignore-duplicate t
-;;    lsp-ui-sideline-show-symbol nil
-;;    lsp-ui-sideline-show-hover t
-;;    lsp-ui-sideline-show-code-actions nil
-;;    lsp-ui-sideline-update-mode 'point
-;;    lsp-ui-sideline-delay 0.0
-;;    )
+   lsp-ui-sideline-code-actions-prefix ""
+   lsp-ui-sideline-ignore-duplicate t
+   lsp-ui-sideline-show-symbol nil
+   lsp-ui-sideline-show-hover t
+   lsp-ui-sideline-show-code-actions nil
+   lsp-ui-sideline-update-mode 'point
+   lsp-ui-sideline-delay 0.5
+   )
 
-;;   ;; lsp-ui-doc
-;;   (setq
-;;    lsp-ui-doc-enable t
-;;    lsp-ui-doc-position 'top
-;;    lsp-ui-doc-delay 0.0
-;;    lsp-ui-doc-show-with-cursor t
-;;    lsp-ui-doc-show-with-mouse t
+  ;; lsp-ui-doc
+  (setq
+   lsp-ui-doc-enable t
+   lsp-ui-doc-position 'top
+   lsp-ui-doc-delay 0.5
+   lsp-ui-doc-show-with-cursor t
+   lsp-ui-doc-show-with-mouse t
 
-;;    lsp-ui-doc-header t
-;;    lsp-ui-doc-use-childframe t
+   lsp-ui-doc-header t
+   lsp-ui-doc-use-childframe t
 
-;;    ; colors
-;;    ;; lsp-ui-doc-header
-;;    ;; lsp-ui-doc-background
-;;    )
+   ; colors
+   ;; lsp-ui-doc-header
+   ;; lsp-ui-doc-background
+   )
 
-;;   ;; (set-face-background lsp-ui-doc-header :background
+  ;; (set-face-background lsp-ui-doc-header :background
 
-;;   ;; lsp-ui-menu
-;;   (setq
-;;    ;; lsp-ui-imenu-window-width
-;;    ;; lsp-ui-imenu--custom-mode-line-format
-;;    lsp-ui-imenu-auto-refersh t
-;;    lsp-ui-imenu-refresh-delay 0.0
-;;    )
+  ;; lsp-ui-menu
+  (setq
+   ;; lsp-ui-imenu-window-width
+   ;; lsp-ui-imenu--custom-mode-line-format
+   lsp-ui-imenu-auto-refersh nil
+   ;; lsp-ui-imenu-refresh-delay 0.5
+   )
 
-;;   ;; lsp-ui-peek
-;;   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-;;   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+  ;; ;; lsp-ui-peek
+  ;; (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
+  ;; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   
-;;   (setq
-;;    lsp-ui-peek-enable t
-;;    lsp-ui-peek-show-directory t
-;;    )
+  (setq
+   lsp-ui-peek-enable t
+   lsp-ui-peek-show-directory t
+   )
 
-;;   ; Mac OS cache file
-;;   (add-to-list 'lsp-file-watch-ignored ".DS_Store")
+  ; Mac OS cache file
+  (add-to-list 'lsp-file-watch-ignored ".DS_Store")
 
-;;   :commands lsp-ui-mode
-;;   )
+  :commands lsp-ui-mode
+  )
 
 ;; indeed, company-capf
 ;; (use-package company-lsp

@@ -159,7 +159,7 @@
   )
 
 (use-package company-quickhelp
-  :ensure t
+  :disabled t
   :init
   (progn
     (add-hook 'after-init-hook 'company-quickhelp-mode)
@@ -169,7 +169,7 @@
   )
 
 (use-package company-box
-  :disabled t ; DISABLED
+  ;; :disabled t ; DISABLED
   :ensure t
   :init
   ;; :hook (company-mode . company-box-mode)
@@ -267,13 +267,13 @@
   ;; lsp-ui-doc
   (setq
    lsp-ui-doc-enable t
-   lsp-ui-doc-position 'top
+   lsp-ui-doc-position 'at-point ;'top
    lsp-ui-doc-delay 0.5
    lsp-ui-doc-show-with-cursor t
    lsp-ui-doc-show-with-mouse t
 
    lsp-ui-doc-header t
-   lsp-ui-doc-use-childframe t
+   lsp-ui-doc-use-childframe nil;t
 
    ; colors
    ;; lsp-ui-doc-header
@@ -298,6 +298,12 @@
    lsp-ui-peek-enable t
    lsp-ui-peek-show-directory t
    )
+
+  ; COLOR ATTRIBUTES
+
+  ;; (custom-set-faces
+  ;;  '(lsp-ui-background ((t :background "#ff00ff")))
+  ;;  '(
 
   ; Mac OS cache file
   (add-to-list 'lsp-file-watch-ignored ".DS_Store")

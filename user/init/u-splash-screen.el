@@ -79,14 +79,14 @@
           ;; Recover session button
           (when recover-session
             (delete-char -2)
-            (insert-text-button " [Recover session] "
+            (insert-text-button "[Recover session]"
                  'action (lambda (_) (call-interactively 'recover-session))
                    'help-echo "Recover previous session"
                    'face 'warning
                    'follow-link t)
             (center-line) (insert-char ?\n 3))
 
-	  (insert-text-button " [Endless Arch] "
+	  (insert-text-button "[Endless Arch]"
 			      'action (lambda (_) (browse-url "https://github.com/EndlessArch"))
 			      'help-echo "To my own github profile"
 			      'follow-link t)

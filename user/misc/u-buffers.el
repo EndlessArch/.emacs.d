@@ -43,11 +43,7 @@
   )
 
 ; dependency for `doom-modeline'
-(use-package all-the-icons
-  :ensure t
-  :init
-  :config
-  )
+(use-package all-the-icons)
 
 (use-package doom-modeline
   :ensure t
@@ -56,7 +52,7 @@
   :init
   :config
   (setq
-   doom-modeline-icon (display-graphic-p)
+   doom-modeline-icon nil ; (display-graphic-p)
 
    doom-modeline-height    20
    doom-modeline-bar-width 5
@@ -67,6 +63,13 @@
   (setq
    inhibit-compacting-font-caches t
    )
+  )
+
+(use-package powerline
+  :disabled t
+  :hook (after-init . powerline-center-theme)
+  :init
+  :config
   )
 
 (use-package nlinum-relative
@@ -81,7 +84,28 @@
    )
   )
 
+(use-package spinner
+  :straight (spinner :type git :host github :repo "Malabarba/spinner.el")
+  :after (doom-modeline unicode-fonts)
+  :init
+  :config
+  ; redefine
+  (defun u/:spinner-start ()
+    (spinner-start
+     ;; 'vertical-breathing
+     'moon
+     20)
+    )
+  ;; (spinner-start 'progress-bar-filled)
+  :hook (prog-mode . u/:spinner-start)
+  )
+
+(use-package unicode-fonts
+  :hook (after-init . unicode-fonts-setup)
+  )
+
 (use-package emojify
+  :disabled t
   :ensure t
   :hook (after-init . global-emojify-mode)
   :init

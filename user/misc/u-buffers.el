@@ -91,13 +91,11 @@
   :config
   ; redefine
   (defun u/:spinner-start ()
-    (spinner-start
-     ;; 'vertical-breathing
-     'moon
+    (spinner-start 'moon
      20)
     )
   ;; (spinner-start 'progress-bar-filled)
-  :hook (prog-mode . u/:spinner-start)
+  :hook (after-change-major-mode . u/:spinner-start)
   )
 
 (use-package unicode-fonts

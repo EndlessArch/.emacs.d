@@ -84,23 +84,15 @@
    )
   )
 
-(use-package spinner
-  :straight (spinner :type git :host github :repo "Malabarba/spinner.el")
-  :after (doom-modeline unicode-fonts)
-  :init
-  :config
-  ; redefine
-  (defun u/:spinner-start ()
-    (spinner-start 'moon
-     20)
-    )
-  ;; (spinner-start 'progress-bar-filled)
-  :hook (after-change-major-mode . u/:spinner-start)
-  )
+;; (use-package spinner
+;;   :straight (spinner :type git :host github :repo "Malabarba/spinner.el")
+;;   :after (doom-modeline unicode-fonts)
+;;   :hook (after-change-major-mode . (lambda () (spinner-start 'moon)))
+;;   )
 
-(use-package unicode-fonts
-  :hook (after-init . unicode-fonts-setup)
-  )
+;; (use-package unicode-fonts
+;;   :hook (after-init . unicode-fonts-setup)
+;;   )
 
 (use-package emojify
   :disabled t

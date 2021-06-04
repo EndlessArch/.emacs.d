@@ -87,7 +87,7 @@
   :ensure t
   :after projectile
   :hook (
-         (after-init . ido-mode)
+         ;; (after-init . ido-mode)
          (after-init . ivy-mode)
          )
   :init

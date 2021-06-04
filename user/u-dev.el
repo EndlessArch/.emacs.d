@@ -86,7 +86,10 @@
 (use-package ivy
   :ensure t
   :after projectile
-  :hook (after-init . ivy-mode)
+  :hook (
+         (after-init . ido-mode)
+         (after-init . ivy-mode)
+         )
   :init
   :config
   (setq
@@ -94,6 +97,8 @@
 
    ; use ivy as a default completion system.
    projectile-completion-system 'ivy
+
+   ivy-use-selectable-prompt t
    )
   )
 

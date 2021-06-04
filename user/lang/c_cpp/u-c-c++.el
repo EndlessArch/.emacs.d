@@ -9,12 +9,19 @@
   :config
   )
 
+(use-package google-c-style
+  :hook (c-mode-common . google-set-c-style)
+  )
+
 (use-package clang-format
   :ensure t
   :bind (("C-c C-f" . 'clang-format-region))
   :init
   :config
-  ;
+  (defconst u/:c-c++/:indent/:ns
+    '("gnu"
+      (c-offset-alist . ((innamespace . [0])))))
+  (c-add-style "u/:c-c++/:indent/:ns" u/:c-c++/:indent/:ns)
   )
 
 (use-package company-c-headers

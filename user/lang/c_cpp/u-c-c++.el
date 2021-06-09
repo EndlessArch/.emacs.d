@@ -1,6 +1,20 @@
 ;; user/lang/c_cpp/u-c-c++.el
 ;; C C++
 
+(setq
+ lsp-clangd t
+ lsp-ccls nil
+ lsp-clients-clangd-executable u/:c-c++/:clangd-executable
+ lsp-clients-clangd-args u/:c-c++/:clangd-args
+      )
+
+;; (use-package ccls
+;;   :disabled t
+;;   :ensure t
+;;   :config
+;;   (setq ccls-executable (executable-find "ccls"))
+;;   )
+
 (use-package modern-cpp-font-lock
   :ensure t
   :hook ((c-mode c++-mode) . modern-c++-font-lock-global-mode)
@@ -18,10 +32,12 @@
   :bind (("C-c C-f" . 'clang-format-region))
   :init
   :config
-  (defconst u/:c-c++/:indent/:ns
-    '("gnu"
-      (c-offset-alist . ((innamespace . [0])))))
-  (c-add-style "u/:c-c++/:indent/:ns" u/:c-c++/:indent/:ns)
+  ;; (defconst u/:c-c++/:indent/:ns
+  ;;   '("gnu"
+  ;;     (c-offset-alist . ((innamespace . [0])))))
+  ;; (c-add-style "u/:c-c++/:indent/:ns" u/:c-c++/:indent/:ns)
+
+  (setq clang-format-style-option "llvm")
   )
 
 (use-package company-c-headers
@@ -33,41 +49,8 @@
   (add-to-list 'company-backends 'company-c-headers)
   )
 
-;; (use-package flycheck-clang-tidy
-;;   :ensure t
-;;   :init
-;;   :hook
-;;   (flycheck-mode . flycheck-clang-tidy-setup)
-;;   :config
-;;   (flycheck-add-next-checker 'c/c++-clang-tidy 'c/c++-clang)
-;;   ;; (flycheck-add-next-checker 'c/c++-clang-tidy 'c/c++-gcc) ; linux
-;;   )
-
-(setq lsp-clangd-executable u/:c-c++/:clangd-executable
-      lsp-clients-clangd-args u/:c-c++/:clangd-args
-      )
-
-;; (use-package cmake-build
-;;   :ensure t
-;;   :init
-
-;; (use-package lsp-clangd
-;;   :ensure t
-;;   :load-path "~/.emacs.d/lsp-clangd"
-;;   :init
-;;   (when (eq system-type 'darwin)
-;;     (setq lsp-clangd-executable "/usr/local/Cellar/llvm/11.0.1/bin/clangd"
-;;           lsp-clients-clangd-args "-std=c++2a"
-;;           )
-;;     )
-;;   :config
-;;   (add-hook 'c-mode-hook #'lsp-clangd-c-enable)
-;;   (add-hook 'c++-mode-hook #'lsp-clangd-c++-enable)
-;;   (add-hook 'objc-mode-hook #'lsp-clangd-objc-enable)
-;;   )
-
 (use-package disaster
-  :ensure t
+  :disabled t
   :init
   :config
   (define-key global-map (kbd "C-c d") 'disaster)

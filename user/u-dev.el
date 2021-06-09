@@ -110,35 +110,6 @@
     (add-hook 'after-init-hook 'global-company-mode)
     )
   :config
-  ;; (defun company-set-cpp-version (version)
-  ;;   (interactive)
-  ;;   (let* ((is-available nil)
-  ;;          (is-option-exists nil))
-  ;;     (cond ((eq version "98") (setq-local (is-available t)))
-  ;;           ((eq version "03") (setq-local (is-available t)))
-  ;;           ((or (eq version "11")
-  ;;                (eq version "0x")) (setq-local (is-available t)))
-  ;;           ((or (eq version "14")
-  ;;                (eq version "0y")) (setq-local (is-available t)))
-  ;;           ((or (eq version "17")
-  ;;                (eq version "0z")) (setq-local (is-available t)))
-  ;;           ((or (eq version "20")
-  ;;                (eq version "2a")) (setq-local (is-available t))))
-
-  ;;     (cond ((is-available)
-  ;;            (cond ((eq company-clang-arguments nil)
-  ;;                   (setq company-clang-arguments (list (concat "-std=c++" version))))
-  ;;                  (t
-  ;;                   (catch 'break
-  ;;                     (dolist (i company-clang-arguments)
-  ;;                       (if (string-match "-std=c++.*")
-  ;;                           (progn
-  ;;                             (remove i company-clang-arguments)
-  ;;                             (add-to-list 'company-clang-arguments
-  ;;                                          (concat "-std=c++" version)))
-  ;;                         (throw 'break i)))))
-  ;;                  ))
-  ;;           (t (error "Invalid version!")))))
 
   ; won't use company-clang
   (setq company-backends
@@ -149,17 +120,6 @@
         company-dabbrev-downcase 0
 	company-minimum-prefix-length 1
 	company-show-numbers nil
-
-        ;; ; clang
-        ;; company-clang-arguments `(
-        ;;                           "-std=c++2a"
-        ;;                           ,(cond
-        ;;                             ((eq system-type 'darwin)
-        ;;                              "-isystem=/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include")
-        ;;                             ((eq system-type 'Linux) ; Linux
-        ;;                              "")
-        ;;                             (t "") ; Windows
-        ;;                             ))
 	)
   )
 
@@ -222,9 +182,23 @@
 ;;          . eglot-ensure)
 ;;   )
 
+(use-package flycheck
+  :straight (flycheck :type git :host github :repo "EndlessArch/flycheck")
+  :config
+  (setq-default flycheck-disabled-checkers
+                '(
+                  ;; lsp
+                  c/c++-clang
+                  c/c++-gcc c/c++-cppcheck)
+        )
+  )
+
 (use-package lsp-mode
   ;; :disabled t ; DISABLED
   :straight (lsp-mode :type git :host github :repo "EndlessArch/lsp-mode")
+  :after flycheck
+  ;; :after ccls
+  :after rust-mode
   ;; :ensure t
   :hook (
 	 (c-mode . lsp)
@@ -243,8 +217,10 @@
   (setq
    lsp-keep-workspace-alive nil ; error: buffer has no process
    lsp-flycheck-default-level 'info
+
+   lsp-prefer-flymake nil
    )
-  
+
   :commands lsp)
 
 (use-package lsp-ui

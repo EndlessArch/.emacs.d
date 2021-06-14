@@ -94,10 +94,11 @@
 ;;   :hook (after-init . unicode-fonts-setup)
 ;;   )
 
-(use-package emojify
-  :disabled t
+(use-package marginalia
   :ensure t
-  :hook (after-init . global-emojify-mode)
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
   :init
-  :config
-  )
+
+  (marginalia-mode))
